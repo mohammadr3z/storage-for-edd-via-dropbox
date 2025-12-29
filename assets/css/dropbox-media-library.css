@@ -1,0 +1,462 @@
+/* Modern Dropbox Library File Table Styles - matching S3 plugin */
+body#media-upload {
+    padding: 20px;
+    background: #f5f5f5;
+}
+
+/* Header Row with Upload Button */
+.dbxe-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.dbxe-header-row .media-title {
+    margin: 0;
+}
+
+.dbxe-header-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* Upload button - Orange style matching back button */
+#dbxe-toggle-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border: none !important;
+    border-radius: 6px;
+    background-color: #d97706 !important;
+    color: #fff !important;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+#dbxe-toggle-upload:hover,
+#dbxe-toggle-upload:focus {
+    background-color: #b45309 !important;
+    color: #fff !important;
+    box-shadow: none;
+    outline: none;
+}
+
+/* New Breadcrumb Navigation */
+.dbxe-breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.dbxe-nav-group {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+html[dir="rtl"] .dbxe-nav-group {
+    margin-right: 0;
+    margin-left: 15px;
+}
+
+.dbxe-search-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.dbxe-search-inline .dbxe-search-input {
+    width: 200px !important;
+    padding: 1px 10px !important;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 0 !important;
+}
+
+.dbxe-search-inline .button {
+    margin: 0 !important;
+}
+
+.dbxe-nav-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background-color: #2271b1;
+    color: #fff;
+    text-decoration: none;
+    margin-right: 15px;
+    /* LTR */
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+html[dir="rtl"] .dbxe-nav-back,
+body.rtl .dbxe-nav-back {
+    margin-right: 0;
+    margin-left: 15px;
+}
+
+.dbxe-nav-back:hover {
+    background-color: #135e96;
+    color: #fff;
+}
+
+.dbxe-nav-back:focus {
+    background-color: #135e96;
+    color: #fff;
+    box-shadow: none;
+    outline: none;
+}
+
+.dbxe-nav-back.disabled {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+}
+
+.dbxe-nav-back .dashicons {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 1;
+}
+
+.dbxe-breadcrumbs {
+    font-size: 14px;
+    color: #646970;
+    line-height: 1.5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+}
+
+.dbxe-breadcrumbs a {
+    color: #2271b1;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.dbxe-breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+.dbxe-breadcrumbs .sep {
+    margin: 0 8px;
+    color: #a7aaad;
+    font-weight: 300;
+}
+
+.dbxe-breadcrumbs .current {
+    color: #1d2327;
+    font-weight: 600;
+}
+
+/* RTL Support for Breadcrumb */
+html[dir="rtl"] .dbxe-nav-back,
+body.rtl .dbxe-nav-back {
+    margin-right: 0;
+    margin-left: 15px;
+}
+
+html[dir="rtl"] .dbxe-nav-back .dashicons,
+body.rtl .dbxe-nav-back .dashicons {
+    transform: scaleX(-1);
+}
+
+html[dir="rtl"] .dbxe-breadcrumbs,
+body.rtl .dbxe-breadcrumbs {
+    direction: rtl !important;
+    text-align: right !important;
+    unicode-bidi: embed;
+}
+
+html[dir="rtl"] .dbxe-breadcrumbs a,
+html[dir="rtl"] .dbxe-breadcrumbs span,
+body.rtl .dbxe-breadcrumbs a,
+body.rtl .dbxe-breadcrumbs span {
+    display: inline-block;
+}
+
+/* Back button - Blue primary style (legacy class kept if needed, but button removed from header) */
+.dbxe-header-buttons .button:not(#dbxe-toggle-upload) {
+    background: #2271b1 !important;
+    border-color: #2271b1 !important;
+    color: #fff !important;
+}
+
+.dbxe-header-buttons .button:not(#dbxe-toggle-upload):hover,
+.dbxe-header-buttons .button:not(#dbxe-toggle-upload):focus {
+    background: #135e96 !important;
+    border-color: #135e96 !important;
+    color: #fff !important;
+}
+
+.dbxe-files-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin: 20px 0;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.dbxe-files-table th {
+    background: #f8f9fa;
+    color: #1d2327;
+    padding: 16px;
+    font-weight: 600;
+    border-bottom: 2px solid #e2e4e7;
+    white-space: nowrap;
+}
+
+.dbxe-files-table td {
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f1;
+    vertical-align: middle;
+    transition: background-color 0.2s ease;
+}
+
+.dbxe-files-table tr:last-child td {
+    border-bottom: none;
+}
+
+.dbxe-files-table tr:hover td {
+    background-color: #f8f9fa;
+}
+
+.dbxe-files-table .file-name {
+    font-weight: 500;
+    color: #2271b1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    direction: ltr;
+    text-align: right;
+}
+
+/* File Display Container */
+.dbxe-file-display {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.dbxe-file-display .file-name {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.5;
+    display: block;
+    letter-spacing: 0.01em;
+    order: 1;
+}
+
+.dbxe-file-display .file-path {
+    font-size: 11px;
+    font-weight: 400;
+    font-style: normal;
+    padding: 3px 0;
+    background: transparent;
+    border-radius: 0;
+    display: block;
+    max-width: 100%;
+    word-break: break-all;
+    opacity: 0.85;
+    order: 2;
+}
+
+.dbxe-files-table .file-size,
+.dbxe-files-table .file-date {
+    color: #50575e;
+    font-size: 0.9em;
+}
+
+.button-small {
+    padding: 6px 12px;
+    font-size: 13px;
+    line-height: 1.4;
+    height: auto;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+/* Folder row styling */
+.dbxe-folder-row {
+    background: #fffbeb;
+    position: relative;
+}
+
+.dbxe-folder-row:hover td {
+    background: #fef3c7;
+}
+
+.dbxe-folder-row .folder-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #92400e;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+    position: relative;
+    z-index: 1;
+    padding: 4px 8px;
+    margin: -4px -8px;
+}
+
+.dbxe-folder-row .folder-link:hover {
+    color: #2271b1;
+    background: rgba(34, 113, 177, 0.08);
+}
+
+/* Small folder icon next to text */
+.dbxe-folder-row .folder-link .dashicons {
+    color: #d97706;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dbxe-folder-row .folder-link:hover .dashicons {
+    color: #2271b1;
+}
+
+.dbxe-folder-row .folder-link .file-name {
+    line-height: 1.4;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+
+/* Notices */
+.dbxe-notice {
+    padding: 15px 20px;
+    margin: 15px 0;
+    border-radius: 4px;
+}
+
+.dbxe-notice.warning {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+}
+
+.dbxe-notice.success {
+    background: #d4edda;
+    border-left: 4px solid #28a745;
+}
+
+/* RTL Support for Notices */
+/* RTL Support for Notices */
+html[dir="rtl"] .dbxe-notice.warning,
+body.rtl .dbxe-notice.warning {
+    border-left: none !important;
+    border-right: 4px solid #ffc107;
+}
+
+html[dir="rtl"] .dbxe-notice.success,
+body.rtl .dbxe-notice.success {
+    border-left: none !important;
+    border-right: 4px solid #28a745;
+}
+
+.dbxe-notice h4 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+}
+
+.dbxe-notice p {
+    margin: 5px 0;
+}
+
+.dbxe-notice-details ul {
+    margin: 10px 0 10px 20px;
+    list-style: disc;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 782px) {
+    body#media-upload {
+        padding: 15px;
+    }
+
+    .dbxe-files-table {
+        width: 100%;
+        margin: 15px 0;
+    }
+
+    /* Hide size and date columns on mobile */
+    .dbxe-files-table .column-size,
+    .dbxe-files-table .column-date {
+        display: none !important;
+    }
+
+    /* Override WordPress default that hides columns after column-primary */
+    .dbxe-files-table.wp-list-table th.column-primary~th.column-actions,
+    .dbxe-files-table.wp-list-table tr:not(.inline-edit-row):not(.no-items) td.column-primary~td.column-actions {
+        display: table-cell !important;
+        padding: 8px !important;
+    }
+
+    /* Hide file path on mobile */
+    .dbxe-file-display .file-path {
+        display: none;
+    }
+
+    /* Search responsive styles */
+    .dbxe-search-container {
+        margin: 15px 0;
+        padding: 12px;
+    }
+
+    .dbxe-search-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+        max-width: none;
+        gap: 10px;
+    }
+
+    #dbxe-file-search {
+        width: 100%;
+        padding: 10px 12px;
+        font-size: 16px;
+        height: 44px;
+    }
+
+    #dbxe-clear-search {
+        width: 100%;
+        padding: 10px 12px;
+        text-align: center;
+        font-size: 14px;
+        height: 44px;
+        min-width: auto;
+    }
+}

@@ -1,0 +1,368 @@
+/* Modern Dropbox Upload Form Styles - Fully Responsive */
+:root {
+    --dbxe-primary: #2271b1;
+    --dbxe-primary-hover: #135e96;
+    --dbxe-error: #dc3232;
+    --dbxe-success: #46b450;
+    --dbxe-warning: #f0b849;
+    --dbxe-text: #1d2327;
+    --dbxe-text-secondary: #50575e;
+    --dbxe-border: #dcdcde;
+    --dbxe-background: #f8f9fa;
+    --dbxe-card-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    --dbxe-transition: all 0.2s ease;
+}
+
+/* Error Messages */
+.edd_errors {
+    border-radius: 0.5rem;
+    margin: 0 0 1.5rem 0;
+    box-shadow: var(--dbxe-card-shadow);
+    padding: 1rem;
+    background: #fef7f7;
+    border-left: 4px solid var(--dbxe-error);
+}
+
+.edd_errors p {
+    margin: 0.75rem 0;
+    padding: 0;
+    line-height: 1.5;
+    color: inherit;
+    font-size: 0.875rem;
+}
+
+/* Notice Styles */
+.dbxe-notice {
+    background: #fff;
+    border-left: 4px solid var(--dbxe-primary);
+    box-shadow: var(--dbxe-card-shadow);
+    margin: 1.25rem 0;
+    padding: 1rem;
+    border-radius: 0.375rem;
+    transition: var(--dbxe-transition);
+}
+
+.dbxe-notice.warning {
+    border-left-color: var(--dbxe-warning);
+    background: #fffbf1;
+}
+
+.dbxe-notice.error {
+    border-left-color: var(--dbxe-error);
+    background: #fef7f7;
+}
+
+.dbxe-notice.success {
+    border-left-color: var(--dbxe-success);
+    background: #f7fef7;
+}
+
+/* RTL Support for Upload Notices */
+html[dir="rtl"] .edd_errors,
+body.rtl .edd_errors {
+    border-left: none;
+    border-right: 4px solid var(--dbxe-error);
+}
+
+html[dir="rtl"] .dbxe-notice,
+body.rtl .dbxe-notice {
+    border-left: none;
+    border-right: 4px solid var(--dbxe-primary);
+}
+
+html[dir="rtl"] .dbxe-notice.warning,
+body.rtl .dbxe-notice.warning {
+    border-right-color: var(--dbxe-warning);
+}
+
+html[dir="rtl"] .dbxe-notice.error,
+body.rtl .dbxe-notice.error {
+    border-right-color: var(--dbxe-error);
+}
+
+html[dir="rtl"] .dbxe-notice.success,
+body.rtl .dbxe-notice.success {
+    border-right-color: var(--dbxe-success);
+}
+
+.dbxe-notice h4 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+    color: var(--dbxe-text);
+    font-weight: 600;
+}
+
+.dbxe-notice p {
+    margin: 0 0 1rem;
+    color: var(--dbxe-text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.dbxe-notice p:last-child {
+    margin-bottom: 0;
+}
+
+/* File Path Styling */
+.dbxe-path {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8125rem;
+    color: #646970;
+    background: #f6f7f7;
+    padding: 2px 6px;
+    border-radius: 3px;
+    display: inline-block;
+    word-break: break-all;
+    font-style: normal;
+}
+
+.dbxe-upload-path {
+    font-size: 0.8125rem;
+    color: var(--dbxe-text-secondary);
+    margin-top: 0.5rem !important;
+    padding-top: 0.5rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.dbxe-upload-path .dbxe-path {
+    font-weight: 500;
+}
+
+
+.dbxe-notice .button-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dbxe-primary);
+    border-color: var(--dbxe-primary);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    height: auto;
+    line-height: 1.4;
+    font-size: 0.875rem;
+    border-radius: 0.375rem;
+    transition: var(--dbxe-transition);
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.dbxe-notice .button-primary:hover,
+.dbxe-notice .button-primary:focus {
+    background: var(--dbxe-primary-hover);
+    border-color: var(--dbxe-primary-hover);
+    color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Upload Form Styling */
+body#media-upload {
+    background: #f5f5f5;
+}
+
+.dbxe-upload-form {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dbxe-upload-form-header {
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--dbxe-border);
+}
+
+.dbxe-upload-form-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--dbxe-text);
+    margin: 0 0 0.5rem 0;
+}
+
+.dbxe-upload-form-group {
+    margin-bottom: 1.25rem;
+}
+
+.dbxe-upload-form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--dbxe-text);
+    font-size: 0.875rem;
+}
+
+.dbxe-upload-form input[type="file"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--dbxe-border);
+    border-radius: 0.375rem;
+    background: var(--dbxe-background);
+    font-size: 0.875rem;
+    box-sizing: border-box;
+    transition: var(--dbxe-transition);
+}
+
+.dbxe-upload-form input[type="file"]:focus {
+    outline: none;
+    border-color: var(--dbxe-primary);
+    box-shadow: 0 0 0 2px rgba(34, 113, 177, 0.1);
+}
+
+.dbxe-upload-form .button-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dbxe-primary);
+    border-color: var(--dbxe-primary);
+    color: #fff;
+    padding: 0.75rem 1.25rem;
+    height: auto;
+    line-height: 1.4;
+    font-size: 0.875rem;
+    border-radius: 0.375rem;
+    transition: var(--dbxe-transition);
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 500;
+    border: 1px solid transparent;
+}
+
+.dbxe-upload-form .button-primary:hover,
+.dbxe-upload-form .button-primary:focus {
+    background: var(--dbxe-primary-hover);
+    border-color: var(--dbxe-primary-hover);
+    color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.dbxe-upload-form .description {
+    color: var(--dbxe-text-secondary);
+    font-size: 0.8125rem;
+    margin: 0.5rem 0 1rem;
+    line-height: 1.5;
+}
+
+.dbxe-upload-progress {
+    margin: 1rem 0;
+    background: var(--dbxe-background);
+    border-radius: 0.25rem;
+    height: 0.5rem;
+    overflow: hidden;
+}
+
+.dbxe-upload-progress-bar {
+    height: 100%;
+    background: var(--dbxe-primary);
+    width: 0;
+    transition: width 0.3s ease;
+}
+
+.dbxe-upload-file-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: var(--dbxe-background);
+    border-radius: 0.375rem;
+    margin: 1rem 0;
+}
+
+.dbxe-upload-file-icon {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.dbxe-upload-file-details {
+    flex: 1;
+}
+
+.dbxe-upload-file-name {
+    font-weight: 500;
+    color: var(--dbxe-text);
+    font-size: 0.875rem;
+    margin: 0 0 0.25rem 0;
+    word-break: break-all;
+}
+
+.dbxe-upload-file-meta {
+    font-size: 0.75rem;
+    color: var(--dbxe-text-secondary);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 782px) {
+    .dbxe-upload-form {
+        padding: 1rem;
+        margin-top: 1rem;
+        border-radius: 0.375rem;
+    }
+
+    .dbxe-notice {
+        padding: 0.875rem;
+        margin: 1rem 0;
+    }
+
+    .dbxe-upload-form-header {
+        margin-bottom: 1rem;
+    }
+
+    .dbxe-upload-form-title {
+        font-size: 1rem;
+    }
+
+    .dbxe-upload-form .button-primary {
+        width: 100%;
+        justify-content: center;
+        padding: 0.875rem 1rem;
+        font-size: 1rem;
+        /* Larger touch target on mobile */
+    }
+
+    .dbxe-upload-form input[type="file"] {
+        padding: 0.875rem;
+        font-size: 1rem;
+        /* Prevent zoom on iOS */
+    }
+
+    /* Improve touch targets */
+    .dbxe-upload-form-group label {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    /* Stack file info on small screens */
+    .dbxe-upload-file-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .dbxe-upload-file-icon {
+        margin-bottom: 0.25rem;
+    }
+
+    /* Responsive file path styling */
+    .dbxe-path {
+        font-size: 0.75rem;
+        padding: 3px 6px;
+        max-width: 100%;
+        word-break: break-word;
+    }
+
+    .dbxe-upload-path {
+        font-size: 0.875rem;
+        margin-top: 0.75rem !important;
+        padding-top: 0.75rem;
+    }
+}
