@@ -46,8 +46,8 @@ jQuery(function ($) {
         return false;
     });
 
-    // Search functionality
-    $('#dbxe-file-search').on('input', function () {
+    // Search functionality for Dropbox files
+    $('#dbxe-file-search').on('input search', function () {
         var searchTerm = $(this).val().toLowerCase();
         var $fileRows = $('.dbxe-files-table tbody tr');
         var visibleCount = 0;
@@ -77,10 +77,6 @@ jQuery(function ($) {
         }
     });
 
-    // Clear search
-    $('#dbxe-clear-search').click(function () {
-        $('#dbxe-file-search').val('').trigger('input');
-    });
 
     // Keyboard shortcut for search
     $(document).keydown(function (e) {

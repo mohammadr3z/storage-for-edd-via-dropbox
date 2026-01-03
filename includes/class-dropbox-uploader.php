@@ -152,7 +152,12 @@ class DBXE_Dropbox_Uploader
         }
 
         // Validate Content-Type (MIME type)
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- $_FILES array passed to validateFileContentType() where tmp_name is used as system path and name is sanitized via sanitize_file_name() with wp_check_filetype_and_ext() validation.
+        // Security: Nonce verified at method start (line 36), capability checked (line 41).
+        // Sanitization: The $_FILES array is passed to validateFileContentType() which internally:
+        // - Uses tmp_name as a read-only system path for wp_check_filetype_and_ext()
+        // - Sanitizes name using sanitize_file_name() before any processing
+        // - Validates MIME type against an allowed list
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- Validated and sanitized inside validateFileContentType() method.
         if (!$this->validateFileContentType($_FILES['dbxe_file'])) {
             wp_die(esc_html__('File content type validation failed. The file may be corrupted or have an incorrect extension.', 'storage-for-edd-via-dropbox'), esc_html__('Error', 'storage-for-edd-via-dropbox'), array('back_link' => true));
             return false;

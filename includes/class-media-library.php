@@ -183,7 +183,7 @@ class DBXE_Media_Library
                                 // Root link
                                 $root_url = remove_query_arg(array('path', 'dbxe_success', 'dbxe_filename', 'error'));
                                 $root_url = add_query_arg(array('_wpnonce' => wp_create_nonce('media-form')), $root_url);
-                                $breadcrumb_links[] = '<a href="' . esc_url($root_url) . '">' . esc_html__('Root', 'storage-for-edd-via-dropbox') . '</a>';
+                                $breadcrumb_links[] = '<a href="' . esc_url($root_url) . '">' . esc_html__('Home', 'storage-for-edd-via-dropbox') . '</a>';
 
                                 // Build path links
                                 foreach ($path_parts as $index => $part) {
@@ -207,7 +207,7 @@ class DBXE_Media_Library
                                     'span' => array('class' => array())
                                 ));
                             } else {
-                                echo '<span class="current">' . esc_html__('Root folder', 'storage-for-edd-via-dropbox') . '</span>';
+                                echo '<span class="current">' . esc_html__('Home', 'storage-for-edd-via-dropbox') . '</span>';
                             }
                             ?>
                         </div>
@@ -216,15 +216,10 @@ class DBXE_Media_Library
                     <!-- Moved Search Input -->
                     <?php if (!empty($files)) { ?>
                         <div class="dbxe-search-inline">
-                            <input type="text"
+                            <input type="search"
                                 id="dbxe-file-search"
                                 class="dbxe-search-input"
                                 placeholder="<?php esc_attr_e('Search files...', 'storage-for-edd-via-dropbox'); ?>">
-                            <button type="button"
-                                id="dbxe-clear-search"
-                                class="button">
-                                <?php esc_html_e('Clear', 'storage-for-edd-via-dropbox'); ?>
-                            </button>
                         </div>
                     <?php } ?>
                 </div>
@@ -294,7 +289,7 @@ class DBXE_Media_Library
                     <input type="hidden" name="dbxe_path" value="<?php echo esc_attr($path); ?>" />
                 </form>
 
-                <?php if (!empty($files)) { ?>
+                <?php if (is_array($files) && !empty($files)) { ?>
 
 
                     <!-- File Display Table -->
@@ -351,9 +346,6 @@ class DBXE_Media_Library
                                     <td class="column-primary" data-label="<?php esc_attr_e('File Name', 'storage-for-edd-via-dropbox'); ?>">
                                         <div class="dbxe-file-display">
                                             <span class="file-name"><?php echo esc_html($file['name']); ?></span>
-                                            <?php if (!empty($path)) { ?>
-                                                <span class="file-path"><?php echo esc_html(ltrim($path, '/')); ?></span>
-                                            <?php } ?>
                                         </div>
                                     </td>
                                     <td class="column-size" data-label="<?php esc_attr_e('File Size', 'storage-for-edd-via-dropbox'); ?>">
@@ -410,7 +402,9 @@ class DBXE_Media_Library
             }
         }
 
-        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verified above when path is not empty, empty path doesn't require nonce.
+        // Security: Nonce verified in lines 399-403 when path is present.
+        // Permission: current_user_can() verified at method start (lines 394-397).
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verified above (lines 399-403) before accessing path.
         $path = !empty($_GET['path']) ? sanitize_text_field(wp_unslash($_GET['path'])) : '';
 
         // Prevent directory traversal

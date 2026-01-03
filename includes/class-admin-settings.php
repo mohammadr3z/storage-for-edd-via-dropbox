@@ -412,15 +412,18 @@ class DBXE_Admin_Settings
         }
 
         // Check for error from Dropbox
-        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- OAuth callback uses state parameter verification above instead of nonces.
+        // Security: OAuth state parameter verified above (lines 404-412) provides CSRF protection.
+        // Permission: current_user_can('manage_options') verified at method start (line 398).
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- OAuth 2.0 uses state parameter for CSRF protection, not WordPress nonces.
         if (isset($_GET['error'])) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- OAuth callback uses state parameter verification instead of nonces.
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- State parameter verified above.
             $this->redirectWithError(sanitize_text_field(wp_unslash($_GET['error'])));
             return;
         }
 
         // Get authorization code
-        // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- OAuth callback uses state parameter verification instead of nonces.
+        // Security: OAuth state parameter verified above (lines 404-412) provides CSRF protection.
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- State parameter verified above.
         $code = isset($_GET['code']) ? sanitize_text_field(wp_unslash($_GET['code'])) : '';
         if (empty($code)) {
             $this->redirectWithError('no_code');
