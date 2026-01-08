@@ -4,7 +4,7 @@ Contributors: mohammadr3z
 Tags: easy-digital-downloads, dropbox, storage, cloud, edd
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -130,11 +130,19 @@ Yes, developers can customize the allowed MIME types using the `dbxe_allowed_mim
 
 == Screenshots ==
 
-1. Admin panel user interface
-2. File selection from Dropbox storage section
-3. File upload to Dropbox storage interface
+1. Plugin Settings
+2. Browse button for link selection
+3. Library popup display
+4. Upload form display
 
 == Changelog ==
+
+= 1.0.7 =
+* Added: New "Browse" button next to file inputs for easier file selection.
+* Improved: Modernized file browser UI with a dedicated modal window.
+* Improved: File browser is now context-aware, opening directly to the selected file's folder.
+* Improved: Browse button is automatically hidden if the plugin is not configured.
+* Improved: Removed legacy "Dropbox Library" tab from the standard WordPress media uploader for a cleaner interface.
 
 = 1.0.6 =
 * Added: Native search input type with clear ("X") icon support for a cleaner UI.

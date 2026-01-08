@@ -59,17 +59,11 @@ class DBXE_Dropbox_Config
 
     /**
      * Get OAuth2 Access Token
+     * Always get fresh from database (no transient caching)
      * @return string
      */
     public function getAccessToken()
     {
-        // Try to get from transient first (fast validation)
-        $token = get_transient(self::KEY_ACCESS_TOKEN);
-        if ($token !== false) {
-            return $token;
-        }
-
-        // Fallback to option if transient expired but option exists
         return get_option(self::KEY_ACCESS_TOKEN, '');
     }
 
@@ -102,22 +96,23 @@ class DBXE_Dropbox_Config
 
     /**
      * Check if access token is expired
+     * Uses transient as expiry indicator only
      * @return bool
      */
     public function isTokenExpired()
     {
-        // If transient exists, token is valid
+        // If transient exists, token is still valid
         if (get_transient(self::KEY_ACCESS_TOKEN) !== false) {
             return false;
         }
 
-        // If transient is gone, check if we even have a token stored
-        $access_token = get_option(self::KEY_ACCESS_TOKEN);
-        if (empty($access_token)) {
-            return true;
+        // If we have refresh token, we can refresh
+        $refresh_token = $this->getRefreshToken();
+        if (!empty($refresh_token)) {
+            return true; // Needs refresh
         }
 
-        // If we have a token but no transient, force refresh
+        // No refresh token = truly expired
         return true;
     }
 

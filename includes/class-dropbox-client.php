@@ -170,18 +170,30 @@ class DBXE_Dropbox_Client
 
     /**
      * Get valid access token (refreshing if needed)
+     * Like official EDD plugin: always validate before use
      * 
      * @return string|false Access token or false on failure
      */
     public function getValidAccessToken()
     {
+        // Always get fresh token from config
+        $access_token = $this->config->getAccessToken();
+
+        // If no token exists, fail
+        if (empty($access_token)) {
+            return false;
+        }
+
+        // Check if token needs refresh (transient expired)
         if ($this->config->isTokenExpired()) {
             if (!$this->refreshAccessToken()) {
                 return false;
             }
+            // Get the new token after refresh
+            $access_token = $this->config->getAccessToken();
         }
 
-        return $this->config->getAccessToken();
+        return $access_token;
     }
 
     /**

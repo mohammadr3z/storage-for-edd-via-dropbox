@@ -1,13 +1,19 @@
-/**
- * Dropbox Upload Tab JavaScript
- * Matching S3 plugin pattern
- */
 jQuery(function ($) {
     // Handler for "Use this file in your Download" button after upload
     $('#dbxe_save_link').click(function () {
-        $(parent.window.edd_filename).val($(this).data('dbxe-fn'));
-        $(parent.window.edd_fileurl).val(dbxe_url_prefix + $(this).data('dbxe-path'));
-        parent.window.tb_remove();
+        var filename = $(this).data('dbxe-fn');
+        var fileurl = dbxe_url_prefix + $(this).data('dbxe-path');
+
+        // Use new modal references
+        if (parent.window && parent.window.dbxe_current_name_input && parent.window.dbxe_current_url_input) {
+            parent.window.dbxe_current_name_input.val(filename);
+            parent.window.dbxe_current_url_input.val(fileurl);
+            // Close the modal
+            if (parent.window.DBXEModal) {
+                parent.window.DBXEModal.close();
+            }
+        }
+        return false;
     });
 
     // File size validation before upload

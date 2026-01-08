@@ -20,27 +20,19 @@ class DBXE_Media_Library
         $this->client = new DBXE_Dropbox_Client();
 
         // Media library integration
-        add_filter('media_upload_tabs', array($this, 'addDropboxTabs'));
         add_action('media_upload_dbxe_lib', array($this, 'registerLibraryTab'));
-        add_action('admin_head', array($this, 'setupAdminJS'));
 
         // Enqueue styles
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
+
+        // Add Dropbox button to EDD downloadable files (Server-Side)
+        add_action('edd_download_file_table_row', array($this, 'renderBrowseButton'), 10, 3);
+
+        // Add scripts for Dropbox button interaction
+        add_action('admin_footer', array($this, 'printAdminScripts'));
     }
 
-    /**
-     * Add Dropbox tabs to media uploader
-     * 
-     * @param array $default_tabs
-     * @return array
-     */
-    public function addDropboxTabs($default_tabs)
-    {
-        if ($this->config->isConnected()) {
-            $default_tabs['dbxe_lib'] = esc_html__('Dropbox Library', 'storage-for-edd-via-dropbox');
-        }
-        return $default_tabs;
-    }
+
 
     /**
      * Register Dropbox Library tab
@@ -77,7 +69,6 @@ class DBXE_Media_Library
      */
     public function renderLibraryTab()
     {
-        media_upload_header();
         wp_enqueue_style('media');
         wp_enqueue_style('dbxe-media-library');
         wp_enqueue_style('dbxe-media-container');
@@ -213,7 +204,6 @@ class DBXE_Media_Library
                         </div>
                     </div>
 
-                    <!-- Moved Search Input -->
                     <?php if (!empty($files)) { ?>
                         <div class="dbxe-search-inline">
                             <input type="search"
@@ -373,17 +363,11 @@ class DBXE_Media_Library
                 <?php } ?>
             <?php } ?>
         </div>
-<?php
+    <?php
     }
 
 
-    /**
-     * Setup admin JavaScript
-     */
-    public function setupAdminJS()
-    {
-        wp_enqueue_script('dbxe-admin-upload-buttons');
-    }
+
 
     /**
      * Get current path from GET param
@@ -457,11 +441,12 @@ class DBXE_Media_Library
         wp_register_style('dbxe-media-library', DBXE_PLUGIN_URL . 'assets/css/dropbox-media-library.css', array(), DBXE_VERSION);
         wp_register_style('dbxe-upload', DBXE_PLUGIN_URL . 'assets/css/dropbox-upload.css', array(), DBXE_VERSION);
         wp_register_style('dbxe-media-container', DBXE_PLUGIN_URL . 'assets/css/dropbox-media-container.css', array(), DBXE_VERSION);
+        wp_register_style('dbxe-modal', DBXE_PLUGIN_URL . 'assets/css/dropbox-modal.css', array('dashicons'), DBXE_VERSION);
 
         // Register scripts
         wp_register_script('dbxe-media-library', DBXE_PLUGIN_URL . 'assets/js/dropbox-media-library.js', array('jquery'), DBXE_VERSION, true);
         wp_register_script('dbxe-upload', DBXE_PLUGIN_URL . 'assets/js/dropbox-upload.js', array('jquery'), DBXE_VERSION, true);
-        wp_register_script('dbxe-admin-upload-buttons', DBXE_PLUGIN_URL . 'assets/js/admin-upload-buttons.js', array('jquery'), DBXE_VERSION, true);
+        wp_register_script('dbxe-modal', DBXE_PLUGIN_URL . 'assets/js/dropbox-modal.js', array('jquery'), DBXE_VERSION, true);
 
         // Localize scripts
         wp_localize_script('dbxe-media-library', 'dbxe_i18n', array(
@@ -477,7 +462,139 @@ class DBXE_Media_Library
 
         wp_add_inline_script('dbxe-upload', 'var dbxe_url_prefix = "' . esc_js($this->config->getUrlPrefix()) . '";', 'before');
         wp_add_inline_script('dbxe-upload', 'var dbxe_max_upload_size = ' . wp_json_encode(wp_max_upload_size()) . ';', 'before');
+    }
 
-        wp_add_inline_script('dbxe-admin-upload-buttons', 'var dbxe_url_prefix = "' . esc_js($this->config->getUrlPrefix()) . '";', 'before');
+    /**
+     * Render Browse Dropbox button in EDD file row (Server Side)
+     */
+    public function renderBrowseButton($key, $file, $post_id)
+    {
+        if (!$this->config->isConnected()) {
+            return;
+        }
+
+        // Add hidden input to store connection status/check if needed by JS (optional)
+    ?>
+        <div class="edd-form-group edd-file-dropbox-browse">
+            <label class="edd-form-group__label edd-repeatable-row-setting-label">&nbsp;</label>
+            <div class="edd-form-group__control">
+                <button type="button" class="button dbxe_browse_button">
+                    <?php esc_html_e('Browse Dropbox', 'storage-for-edd-via-dropbox'); ?>
+                </button>
+            </div>
+        </div>
+    <?php
+    }
+
+    /**
+     * Add Dropbox browse button scripts
+     */
+    public function printAdminScripts()
+    {
+        global $pagenow, $typenow;
+
+        // Only on EDD download edit pages
+        if (!($pagenow === 'post.php' || $pagenow === 'post-new.php') || $typenow !== 'download') {
+            return;
+        }
+
+        // Only if connected
+        if (!$this->config->isConnected()) {
+            return;
+        }
+
+        // Enqueue modal assets
+        wp_enqueue_style('dbxe-modal');
+        wp_enqueue_script('dbxe-modal');
+
+        $dropbox_url = admin_url('media-upload.php?type=dbxe_lib&tab=dbxe_lib');
+    ?>
+        <style>
+            /* Dropbox Button Styles */
+            .edd-file-dropbox-browse {
+                width: auto !important;
+                flex: 0 0 auto !important;
+                align-self: flex-end !important;
+            }
+
+            @media screen and (max-width: 782px) {
+                .edd-file-dropbox-browse {
+                    width: 100% !important;
+                    display: block;
+                    margin-top: 10px;
+                }
+
+                .edd-file-dropbox-browse .dbxe_browse_button {
+                    width: 100% !important;
+                    display: block;
+                }
+            }
+
+            .edd-file-dropbox-browse .edd-form-group__label {
+                display: none !important;
+            }
+
+            .dbxe_browse_button {
+                background: #0061FE !important;
+                color: #fff !important;
+                border-color: #0061FE !important;
+                padding: 4px 12px !important;
+                height: auto !important;
+                line-height: 1.4 !important;
+                font-size: 13px !important;
+                cursor: pointer !important;
+            }
+
+            .dbxe_browse_button:hover,
+            .dbxe_browse_button:focus {
+                background: #0055D4 !important;
+                color: #fff !important;
+                border-color: #0055D4 !important;
+            }
+        </style>
+        <script type="text/javascript">
+            jQuery(function($) {
+                var dropboxUrl = '<?php echo esc_js($dropbox_url); ?>';
+                var wpNonce = '<?php echo wp_create_nonce("media-form"); ?>';
+                var modalTitle = '<?php echo esc_js(__('Dropbox Library', 'storage-for-edd-via-dropbox')); ?>';
+                var urlPrefix = '<?php echo esc_js($this->config->getUrlPrefix()); ?>';
+
+                // Event delegation for all browse buttons
+                $(document).on('click', '.dbxe_browse_button', function(e) {
+                    e.preventDefault();
+
+                    var $btn = $(this);
+                    var $row = $btn.closest('.edd_repeatable_row');
+
+                    // Store references to the input fields for this row
+                    window.dbxe_current_row = $row;
+                    window.dbxe_current_name_input = $row.find('input[name^="edd_download_files"][name$="[name]"]');
+                    window.dbxe_current_url_input = $row.find('input[name^="edd_download_files"][name$="[file]"]');
+
+                    // Context-Aware: Extract folder path from current URL
+                    var currentUrl = window.dbxe_current_url_input.val();
+                    var folderPath = '';
+
+                    if (currentUrl && currentUrl.indexOf(urlPrefix) === 0) {
+                        // Remove prefix
+                        var path = currentUrl.substring(urlPrefix.length);
+                        // Remove filename, keep folder path
+                        var lastSlash = path.lastIndexOf('/');
+                        if (lastSlash !== -1) {
+                            folderPath = path.substring(0, lastSlash);
+                        }
+                    }
+
+                    var modalUrl = dropboxUrl + '&_wpnonce=' + wpNonce;
+                    if (folderPath) {
+                        modalUrl += '&path=' + encodeURIComponent(folderPath);
+                    }
+
+                    // Open Modal
+                    DBXEModal.open(modalUrl, modalTitle);
+                });
+            });
+        </script>
+<?php
     }
 }
