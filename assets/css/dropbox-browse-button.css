@@ -1,0 +1,45 @@
+/**
+ * Dropbox Browse Button Styles
+ * Used in EDD download files section
+ */
+
+.edd-file-dropbox-browse {
+    width: auto !important;
+    flex: 0 0 auto !important;
+    align-self: flex-end !important;
+}
+
+@media screen and (max-width: 782px) {
+    .edd-file-dropbox-browse {
+        width: 100% !important;
+        display: block;
+        margin-top: 10px;
+    }
+
+    .edd-file-dropbox-browse .dbxe_browse_button {
+        width: 100% !important;
+        display: block;
+    }
+}
+
+.edd-file-dropbox-browse .edd-form-group__label {
+    display: none !important;
+}
+
+.dbxe_browse_button {
+    background: #0061FE !important;
+    color: #fff !important;
+    border-color: #0061FE !important;
+    padding: 4px 12px !important;
+    height: auto !important;
+    line-height: 1.4 !important;
+    font-size: 13px !important;
+    cursor: pointer !important;
+}
+
+.dbxe_browse_button:hover,
+.dbxe_browse_button:focus {
+    background: #0055D4 !important;
+    color: #fff !important;
+    border-color: #0055D4 !important;
+}
