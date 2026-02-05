@@ -202,9 +202,10 @@ class DBXE_Dropbox_Client
      * @param string $endpoint API endpoint
      * @param array $data Request data
      * @param string $baseUrl Base URL to use
+     * @param bool $retry Whether this is a retry after token refresh (prevents infinite recursion)
      * @return array|false Response data or false on failure
      */
-    private function apiRequest($endpoint, $data = [], $baseUrl = null)
+    private function apiRequest($endpoint, $data = [], $baseUrl = null, $retry = false)
     {
         $client = $this->getClient();
         $access_token = $this->getValidAccessToken();
@@ -230,12 +231,15 @@ class DBXE_Dropbox_Client
 
             $statusCode = $response->getStatusCode();
 
-            // Handle token expiration
-            if ($statusCode === 401) {
+            // Handle token expiration (only retry once to prevent infinite recursion)
+            if ($statusCode === 401 && !$retry) {
                 if ($this->refreshAccessToken()) {
                     // Retry request with new token
-                    return $this->apiRequest($endpoint, $data, $baseUrl);
+                    return $this->apiRequest($endpoint, $data, $baseUrl, true);
                 }
+                return false;
+            } elseif ($statusCode === 401) {
+                $this->config->debug('API request failed after token refresh: ' . $endpoint);
                 return false;
             }
 
@@ -295,7 +299,20 @@ class DBXE_Dropbox_Client
             return $files;
         }
 
-        foreach ($response['entries'] as $entry) {
+        $allEntries = $response['entries'];
+
+        // Handle pagination if there are more files
+        while (isset($response['has_more']) && $response['has_more'] && isset($response['cursor'])) {
+            $response = $this->apiRequest('/files/list_folder/continue', [
+                'cursor' => $response['cursor']
+            ]);
+
+            if ($response && isset($response['entries'])) {
+                $allEntries = array_merge($allEntries, $response['entries']);
+            }
+        }
+
+        foreach ($allEntries as $entry) {
             if ($entry['.tag'] === 'file') {
                 $files[] = [
                     'name' => $entry['name'],
@@ -314,37 +331,6 @@ class DBXE_Dropbox_Client
                     'modified' => '',
                     'is_folder' => true
                 ];
-            }
-        }
-
-        // Handle pagination if there are more files
-        while (isset($response['has_more']) && $response['has_more'] && isset($response['cursor'])) {
-            $response = $this->apiRequest('/files/list_folder/continue', [
-                'cursor' => $response['cursor']
-            ]);
-
-            if ($response && isset($response['entries'])) {
-                foreach ($response['entries'] as $entry) {
-                    if ($entry['.tag'] === 'file') {
-                        $files[] = [
-                            'name' => $entry['name'],
-                            'path' => $entry['path_display'],
-                            'path_lower' => $entry['path_lower'],
-                            'size' => isset($entry['size']) ? $entry['size'] : 0,
-                            'modified' => isset($entry['client_modified']) ? $entry['client_modified'] : '',
-                            'is_folder' => false
-                        ];
-                    } elseif ($entry['.tag'] === 'folder') {
-                        $files[] = [
-                            'name' => $entry['name'],
-                            'path' => $entry['path_display'],
-                            'path_lower' => $entry['path_lower'],
-                            'size' => 0,
-                            'modified' => '',
-                            'is_folder' => true
-                        ];
-                    }
-                }
             }
         }
 

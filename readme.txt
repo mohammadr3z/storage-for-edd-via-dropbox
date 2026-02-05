@@ -4,7 +4,7 @@ Contributors: mohammadr3z
 Tags: easy-digital-downloads, dropbox, storage, cloud, edd
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -37,58 +37,30 @@ Storage for EDD via Dropbox is a powerful extension for Easy Digital Downloads t
 
 == Configuration ==
 
-= Step 1: Create a Dropbox App =
-
-1. Go to [Dropbox Developer Console](https://www.dropbox.com/developers/apps)
-2. Click "Create app"
-3. Choose "Scoped Access" for API
-4. Choose "Full Dropbox" for access type
-5. Give your app a unique name
-6. Click "Create app"
-
-= Step 2: Configure Your App =
-
-1. In your app settings, go to the "Permissions" tab
-2. Enable these permissions:
-   * files.metadata.read
-   * files.content.read
-   * files.content.write
-3. Click "Submit" to save permissions
-
-= Step 3: Set OAuth Redirect URI =
-
-1. In your app settings, find "OAuth 2 Redirect URIs"
-2. Add this URL: `https://your-site.com/wp-admin/admin-post.php?action=dbxe_oauth_callback`
-3. Replace `your-site.com` with your actual domain
-
-= Step 4: Connect in WordPress =
-
-1. Go to Downloads > Settings > Extensions > Dropbox Storage
-2. Enter your App Key and App Secret from the Dropbox Developer Console
-3. Save settings
-4. Click "Connect to Dropbox"
-5. Authorize the connection in the Dropbox popup
-6. You're connected!
+1. Create a Dropbox App at [Dropbox Developer Console](https://www.dropbox.com/developers/apps)
+2. Set OAuth Redirect URI to: `https://your-site.com/dbxe-oauth-callback/`
+3. Go to Downloads > Settings > Extensions > Dropbox Storage
+4. Enter your App Key and App Secret
+5. Save settings and click "Connect to Dropbox"
 
 == Usage ==
 
 = Browsing and Selecting Files =
 
 1. When creating or editing a download in Easy Digital Downloads
-2. Click on "Upload File" or "Choose File"
-3. Select the "Dropbox Library" tab
-4. Browse your Dropbox storage using the folder navigation
-5. Use the breadcrumb navigation bar to quickly jump to parent folders
-6. Use the search box in the header to filter files by name
-7. Click "Select" to use an existing file for your download
+2. Click the "Browse Dropbox" button next to the file URL field
+3. Browse your Dropbox storage using the folder navigation
+4. Use the breadcrumb navigation bar to quickly jump to parent folders
+5. Use the search box in the header to filter files by name
+6. Click "Select" to use an existing file for your download
 
 = Uploading New Files =
 
-1. In the "Dropbox Library" tab, click the "Upload" button in the header row
+1. In the Dropbox browser, click the "Upload" button in the header row
 2. The upload form will appear above the file list
 3. Choose your file and click "Upload"
 4. After a successful upload, the file URL will be automatically set with the Dropbox prefix
-5. Click "Back" to return to the file browser without uploading
+5. Click the button again to hide the upload form
 
 == Frequently Asked Questions ==
 
@@ -135,6 +107,11 @@ Yes, developers can customize the allowed MIME types using the `dbxe_allowed_mim
 3. File upload to Dropbox storage interface
 
 == Changelog ==
+
+= 1.0.9 =
+* Improved: UI styles and enhanced layout consistency for better harmony.
+* Improved: Comprehensive code improvements and stability optimizations.
+* Added: Skeleton loader with shimmer animation for better UX while loading Dropbox browser modal.
 
 = 1.0.8 =
 * Use wp_enqueue commands: Replaced inline <style> and <script> in includes/class-media-library.php (admin media library)

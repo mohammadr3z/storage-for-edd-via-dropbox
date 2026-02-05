@@ -389,7 +389,7 @@ class DBXE_Media_Library
         // Security: Nonce verified in lines 399-403 when path is present.
         // Permission: current_user_can() verified at method start (lines 394-397).
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verified above (lines 399-403) before accessing path.
-        $path = !empty($_GET['path']) ? sanitize_text_field(wp_unslash($_GET['path'])) : '';
+        $path = !empty($_GET['path']) ? trim(sanitize_text_field(wp_unslash($_GET['path']))) : '';
 
         // Prevent directory traversal
         if (strpos($path, '..') !== false) {
@@ -406,10 +406,13 @@ class DBXE_Media_Library
      */
     private function formatFileSize($size)
     {
-        if ($size == 0) return '0 B';
+        if ($size === 0) return '0 B';
 
         $units = array('B', 'KB', 'MB', 'GB', 'TB');
         $power = floor(log($size, 1024));
+        if ($power >= count($units)) {
+            $power = count($units) - 1;
+        }
 
         return round($size / pow(1024, $power), 2) . ' ' . $units[$power];
     }

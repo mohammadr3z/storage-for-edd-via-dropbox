@@ -106,6 +106,12 @@ class DBXE_Dropbox_Config
             return false;
         }
 
+        // Check if token expiry has passed
+        $expiry = $this->getTokenExpiry();
+        if ($expiry > 0 && time() < $expiry) {
+            return false; // Token still valid
+        }
+
         // If we have refresh token, we can refresh
         $refresh_token = $this->getRefreshToken();
         if (!empty($refresh_token)) {

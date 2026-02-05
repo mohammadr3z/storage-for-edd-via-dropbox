@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Storage for EDD via Dropbox
  * Description: Enable secure cloud storage and delivery of your digital products through Dropbox for Easy Digital Downloads.
- * Version: 1.0.8
+ * Version: 1.0.9
  * Author: mohammadr3z
  * Requires Plugins: easy-digital-downloads
  * License: GPL-2.0-or-later
@@ -28,7 +28,7 @@ if (!defined('DBXE_PLUGIN_URL')) {
     define('DBXE_PLUGIN_URL', plugin_dir_url(__FILE__));
 }
 if (!defined('DBXE_VERSION')) {
-    define('DBXE_VERSION', '1.0.8');
+    define('DBXE_VERSION', '1.0.9');
 }
 
 // Load plugin classes
