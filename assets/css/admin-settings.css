@@ -1,0 +1,115 @@
+/**
+ * Admin Settings Styles for Dropbox EDD Integration
+ */
+
+/* Connected status indicator - Green */
+.dbxe-connected-status {
+    color: #00a32a;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 14px;
+    background: #d4edda;
+    border-left: 4px solid #00a32a;
+    border-radius: 0 4px 4px 0;
+}
+
+/* Warning status indicator - Yellow/Orange */
+.dbxe-warning-status {
+    color: #856404;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 14px;
+    background: #fff3cd;
+    border-left: 4px solid #f0ad4e;
+    border-radius: 0 4px 4px 0;
+}
+
+/* Notice styling */
+.dbxe-notice {
+    padding: 10px 15px;
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    margin: 10px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+/* Permission warning message */
+.dbxe-permission-warning {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #fff3cd;
+    border-left: 4px solid #f0ad4e;
+    color: #856404;
+    font-size: 13px;
+    margin-top: 8px;
+    border-radius: 0 4px 4px 0;
+}
+
+/* RTL Support */
+.rtl .dbxe-connected-status,
+.rtl .dbxe-warning-status,
+.rtl .dbxe-notice,
+.rtl .dbxe-permission-warning {
+    border-left: none;
+    border-right: 4px solid;
+    border-radius: 4px 0 0 4px;
+}
+
+.rtl .dbxe-connected-status {
+    border-right-color: #00a32a;
+}
+
+.rtl .dbxe-warning-status,
+.rtl .dbxe-permission-warning {
+    border-right-color: #f0ad4e;
+}
+
+.rtl .dbxe-notice {
+    border-right-color: #ffc107;
+}
+
+/* Disabled input styling */
+.dbxe-disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Credential input fields */
+.dbxe-credential {
+    font-family: monospace;
+}
+
+/* OAuth buttons */
+.dbxe-oauth-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dbxe-oauth-button .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+/* Setup instructions */
+#edd_settings\\[dbxe_help\\] ol {
+    margin-left: 20px;
+    list-style: decimal;
+}
+
+#edd_settings\\[dbxe_help\\] li {
+    margin-bottom: 8px;
+}
+
+#edd_settings\\[dbxe_help\\] code {
+    background: #f0f0f0;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    word-break: break-all;
+}

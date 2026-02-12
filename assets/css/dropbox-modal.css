@@ -1,0 +1,198 @@
+/**
+ * DBXE Modal Styles
+ * WordPress Native Media Modal Style
+ */
+.dbxe-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 100000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.dbxe-modal-overlay.open {
+    display: flex;
+}
+
+.dbxe-modal {
+    width: 90%;
+    height: 90%;
+    max-width: 1200px;
+    max-height: 800px;
+    background: #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Header */
+.dbxe-modal-header {
+    background: #fff;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    box-sizing: border-box;
+}
+
+.dbxe-modal-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.dbxe-modal-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #787c82;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.dbxe-modal-close:hover {
+    color: #d63638;
+}
+
+.dbxe-modal-close .dashicons {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+}
+
+/* Content */
+.dbxe-modal-content {
+    flex: 1;
+    position: relative;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+
+
+.dbxe-modal-container {
+    width: 100%;
+    flex: 1;
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    background: #fff;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    scrollbar-gutter: stable;
+}
+
+.dbxe-modal-container.hidden {
+    display: none;
+}
+
+/* Skeleton Loading Styles */
+.dbxe-skeleton-loader {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    flex: 1;
+    height: auto;
+    box-sizing: border-box;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+}
+
+.dbxe-skeleton-loader.hidden {
+    display: none !important;
+}
+
+/* Skeleton Cell - base shimmer line */
+.dbxe-skeleton-cell {
+    height: 16px;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    border-radius: 4px;
+    animation: dbxe-skeleton-shimmer 1.5s ease-in-out infinite;
+    will-change: background-position;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Skeleton Breadcrumb */
+.dbxe-skeleton-breadcrumb .dbxe-skeleton-cell {
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: dbxe-skeleton-shimmer 1.5s ease-in-out infinite;
+    will-change: background-position;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Skeleton Table */
+.dbxe-skeleton-table tbody tr:hover td {
+    background: transparent !important;
+}
+
+/* Skeleton Animation */
+@keyframes dbxe-skeleton-shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Upload Button */
+#dbxe-toggle-upload {
+    line-height: 2;
+}
+
+
+
+/* Responsive */
+@media screen and (max-width: 782px) {
+    .dbxe-modal {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        border-radius: 0;
+    }
+
+    .dbxe-skeleton-loader {
+        padding: 20px;
+    }
+
+    #dbxe-toggle-upload {
+        line-height: 1;
+    }
+
+    /* Hide size and date columns in skeleton on mobile */
+    .dbxe-skeleton-loader .dbxe-files-table th.column-size,
+    .dbxe-skeleton-loader .dbxe-files-table th.column-date,
+    .dbxe-skeleton-loader .dbxe-files-table td:nth-child(2),
+    .dbxe-skeleton-loader .dbxe-files-table td:nth-child(3),
+    .dbxe-skeleton-table th.column-size,
+    .dbxe-skeleton-table th.column-date,
+    .dbxe-skeleton-table td:nth-child(2),
+    .dbxe-skeleton-table td:nth-child(3) {
+        display: none !important;
+    }
+}
