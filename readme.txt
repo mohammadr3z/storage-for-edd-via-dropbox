@@ -4,7 +4,7 @@ Contributors: mohammadr3z
 Tags: easy-digital-downloads, dropbox, storage, cloud, edd
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -107,6 +107,9 @@ Yes, developers can customize the allowed MIME types using the `dbxe_allowed_mim
 3. File upload to Dropbox storage interface
 
 == Changelog ==
+
+= 1.1.1 =
+* Updated: Internal vendor dependencies.
 
 = 1.1.0 =
 * Major Refactor: Replaced legacy iframe browser with modern AJAX implementation for improved performance.

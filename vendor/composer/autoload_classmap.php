@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'DBXE_Admin_Settings' => $baseDir . '/includes/class-admin-settings.php',
     'DBXE_DropboxStorage' => $baseDir . '/includes/class-main-plugin.php',
@@ -14,4 +15,8 @@ return array(
     'DBXE_Dropbox_Downloader' => $baseDir . '/includes/class-dropbox-downloader.php',
     'DBXE_Dropbox_Uploader' => $baseDir . '/includes/class-dropbox-uploader.php',
     'DBXE_Media_Library' => $baseDir . '/includes/class-media-library.php',
+    'PhpToken' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
+    'Stringable' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+    'UnhandledMatchError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
+    'ValueError' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
 );
